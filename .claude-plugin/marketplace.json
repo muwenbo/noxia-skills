@@ -1,0 +1,26 @@
+{
+  "name": "noxia-skills",
+  "owner": {
+    "name": "Wenbo Mu",
+    "email": "muwenbo.prc@gmail.com"
+  },
+  "metadata": {
+    "description": "Clinical genetic analysis and reporting skills for the Noxia rare disease variant analysis platform",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "noxia-skills",
+      "description": "Clinical genetic analysis skills for Noxia — variant analysis, ACMG classification, phenotype inference, case management, and clinical report generation for rare disease cases",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/noxia-case-management",
+        "./skills/noxia-fast-forward",
+        "./skills/noxia-phenotype-inference",
+        "./skills/noxia-reporting",
+        "./skills/noxia-variant-analysis"
+      ]
+    }
+  ]
+}
