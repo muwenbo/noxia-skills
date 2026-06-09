@@ -1,0 +1,45 @@
+{
+  "name": "noxia-skills",
+  "version": "1.0.0",
+  "description": "Clinical genetic analysis and reporting skills for the Noxia rare disease variant analysis platform",
+  "author": {
+    "name": "Wenbo Mu",
+    "email": "muwenbo.prc@gmail.com",
+    "url": "https://github.com/muwenbo"
+  },
+  "homepage": "https://github.com/muwenbo/noxia-skills",
+  "repository": "https://github.com/muwenbo/noxia-skills",
+  "license": "MIT",
+  "keywords": [
+    "rare-disease",
+    "genetics",
+    "variant-analysis",
+    "acmg",
+    "clinical-genomics",
+    "noxia",
+    "bioinformatics",
+    "reporting"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Noxia Skills",
+    "shortDescription": "Rare disease variant analysis, ACMG classification, and clinical reporting for Noxia",
+    "longDescription": "Use Noxia Skills to perform end-to-end clinical genetic analysis: create cases, upload VCFs, run phenotype-driven variant scans, classify variants with ACMG criteria, and draft clinical reports — or run everything unattended with the fast-forward skill. Includes phenotype-driven inference for negative WES results.",
+    "developerName": "Wenbo Mu",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Analyze this rare disease case in Noxia.",
+      "Fast-forward case 42 — analyze and draft the report."
+    ],
+    "websiteURL": "https://github.com/muwenbo/noxia-skills",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "brandColor": "#0EA5E9",
+    "screenshots": []
+  }
+}
