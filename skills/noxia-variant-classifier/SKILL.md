@@ -14,13 +14,25 @@ Routine noxia case analysis does not require this skill.
 
 ---
 
+## Prerequisites
+
+Scripts require Python 3.7+ with `requests` and `beautifulsoup4`:
+
+```bash
+pip install requests beautifulsoup4
+```
+
+---
+
 ## Path Resolution
 
+All scripts and data are self-contained within this skill's directory:
+
 ```
-SKILL_DIR = this SKILL.md's directory (.claude/skills/noxia-variant-classifier/)
-VCEP_GUIDELINES = $SKILL_DIR/../variant-classifier/data/vcep-guidelines/
-CLINVAR_SCRIPT  = $SKILL_DIR/../variant-classifier/scripts/clinvar_region_query.py
-PAPER_SCRIPT    = $SKILL_DIR/../paper-finder/scripts/paper_fetcher.py
+SKILL_DIR       = this SKILL.md's directory
+VCEP_GUIDELINES = $SKILL_DIR/data/vcep-guidelines/
+CLINVAR_SCRIPT  = $SKILL_DIR/scripts/clinvar_region_query.py
+PAPER_SCRIPT    = $SKILL_DIR/scripts/paper_fetcher.py
 ```
 
 ---
@@ -63,7 +75,7 @@ If `kb_get_gene.vcep_acmg_specifications` is non-null:
 1. Note the spec name and version from the response
 2. Search `$VCEP_GUIDELINES/` for a file matching the gene symbol:
    ```bash
-   ls $SKILL_DIR/../variant-classifier/data/vcep-guidelines/ | grep -i "<GENE>"
+   ls $SKILL_DIR/data/vcep-guidelines/ | grep -i "<GENE>"
    ```
 3. If a guideline file exists, **read it in full** before evaluating any criteria
 4. Note which criteria are modified, strengthened, or restricted by the VCEP spec
@@ -82,7 +94,7 @@ classified variants at or near the same codon/position:
 
 ```bash
 # Use a ±5 bp window around the variant position
-python $SKILL_DIR/../variant-classifier/scripts/clinvar_region_query.py \
+python $SKILL_DIR/scripts/clinvar_region_query.py \
   <CHROM>:<POS-5>-<POS+5> --format json -o /tmp/clinvar_region.json
 ```
 
@@ -102,7 +114,7 @@ If `kb_lookup_variant` returned PMIDs:
 
 ```bash
 # Metadata preview first (fast)
-python $SKILL_DIR/../paper-finder/scripts/paper_fetcher.py <PMID1> <PMID2> ... --metadata-only
+python $SKILL_DIR/scripts/paper_fetcher.py <PMID1> <PMID2> ... --metadata-only
 ```
 
 Present the metadata table to the user and ask:

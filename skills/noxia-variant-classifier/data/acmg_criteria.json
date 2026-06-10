@@ -1,0 +1,364 @@
+{
+  "version": "1.0.0",
+  "description": "Standard ACMG/AMP variant classification criteria thresholds",
+  "reference": "Richards et al. 2015, ACMG/AMP Standards and Guidelines",
+  "last_updated": "2024-01-01",
+
+  "population_frequency": {
+    "description": "Allele frequency thresholds for benign/pathogenic evidence",
+    "BA1": {
+      "threshold": 0.05,
+      "description": "Standalone benign - AF > 5%",
+      "note": "Allele frequency too high for penetrant disorder"
+    },
+    "BS1": {
+      "threshold": 0.01,
+      "description": "Strong benign - AF > 1% (gene/disease dependent)",
+      "note": "May need adjustment based on disease prevalence"
+    },
+    "BS1_gene_specific": {
+      "description": "Gene-specific BS1 thresholds (override default)",
+      "examples": {
+        "BRCA1": 0.001,
+        "BRCA2": 0.001,
+        "TP53": 0.0001
+      }
+    },
+    "PM2_supporting": {
+      "threshold": 0.0001,
+      "description": "Rare for supporting evidence - AF < 0.01%",
+      "note": "Per 2018 SVI recommendation, PM2 at supporting level"
+    },
+    "PM2_moderate": {
+      "threshold": 0.00001,
+      "description": "Very rare for moderate evidence - AF < 0.001%",
+      "note": "Can be elevated to moderate if extremely rare"
+    }
+  },
+
+  "computational": {
+    "description": "Computational predictor thresholds for PP3/BP4/BP7",
+
+    "sift": {
+      "deleterious_threshold": 0.05,
+      "description": "Score <= threshold is deleterious",
+      "note": "Lower scores indicate more damaging"
+    },
+
+    "polyphen2": {
+      "probably_damaging_threshold": 0.85,
+      "possibly_damaging_threshold": 0.15,
+      "description": "Score >= probably_damaging is damaging, < possibly is benign",
+      "note": "Higher scores indicate more damaging"
+    },
+
+    "cadd": {
+      "deleterious_threshold": 25,
+      "supporting_threshold": 20,
+      "benign_threshold": 15,
+      "description": "CADD PHRED scores",
+      "note": "Higher scores indicate more deleterious"
+    },
+
+    "revel": {
+      "pathogenic_threshold": 0.7,
+      "likely_pathogenic_threshold": 0.5,
+      "likely_benign_threshold": 0.25,
+      "benign_threshold": 0.15,
+      "description": "REVEL ensemble score",
+      "note": "Higher scores indicate more pathogenic"
+    },
+
+    "spliceai": {
+      "high_threshold": 0.8,
+      "moderate_threshold": 0.5,
+      "low_threshold": 0.2,
+      "description": "SpliceAI delta score",
+      "note": "Max of DS_AG, DS_AL, DS_DG, DS_DL"
+    },
+
+    "consensus_requirements": {
+      "PP3": {
+        "description": "Multiple computational tools support deleterious effect",
+        "requirement": "majority_agreement",
+        "minimum_tools": 2
+      },
+      "BP4": {
+        "description": "Multiple computational tools suggest no impact",
+        "requirement": "unanimous_agreement",
+        "minimum_tools": 2
+      },
+      "BP7": {
+        "description": "Silent variant with no predicted splice impact",
+        "requirement": "silent_plus_no_splice",
+        "spliceai_threshold": 0.1
+      }
+    }
+  },
+
+  "null_variants": {
+    "description": "PVS1 applicable variant types",
+    "applicable_consequences": [
+      "stop_gained",
+      "frameshift_variant",
+      "splice_donor_variant",
+      "splice_acceptor_variant",
+      "start_lost",
+      "transcript_ablation"
+    ],
+    "canonical_splice_positions": {
+      "donor": [1, 2],
+      "acceptor": [-1, -2]
+    },
+    "nmd_considerations": {
+      "description": "Nonsense-mediated decay prediction",
+      "last_exon_threshold": 55,
+      "note": "Variants in last exon or within 55bp of last splice junction may escape NMD"
+    }
+  },
+
+  "point_system": {
+    "description": "Point-based combining rules (Tavtigian et al. 2020)",
+
+    "pathogenic_points": {
+      "very_strong": 8,
+      "strong": 4,
+      "moderate": 2,
+      "supporting": 1
+    },
+
+    "benign_points": {
+      "standalone": -8,
+      "strong": -4,
+      "moderate": -2,
+      "supporting": -1
+    },
+
+    "classification_thresholds": {
+      "pathogenic": {
+        "min_points": 10,
+        "description": "Pathogenic if net points >= 10"
+      },
+      "likely_pathogenic": {
+        "min_points": 6,
+        "max_points": 9,
+        "description": "Likely Pathogenic if net points 6-9"
+      },
+      "uncertain_significance": {
+        "min_points": -5,
+        "max_points": 5,
+        "description": "VUS if net points -5 to 5"
+      },
+      "likely_benign": {
+        "min_points": -9,
+        "max_points": -6,
+        "description": "Likely Benign if net points -6 to -9"
+      },
+      "benign": {
+        "max_points": -10,
+        "description": "Benign if net points <= -10 OR BA1 met"
+      }
+    }
+  },
+
+  "combining_rules": {
+    "description": "Traditional ACMG combining rules",
+
+    "pathogenic": [
+      {"rule": "1 Very Strong AND ≥1 Strong", "result": "Pathogenic"},
+      {"rule": "1 Very Strong AND ≥2 Moderate", "result": "Pathogenic"},
+      {"rule": "1 Very Strong AND 1 Moderate AND 1 Supporting", "result": "Pathogenic"},
+      {"rule": "1 Very Strong AND ≥2 Supporting", "result": "Pathogenic"},
+      {"rule": "≥2 Strong", "result": "Pathogenic"},
+      {"rule": "1 Strong AND ≥3 Moderate", "result": "Pathogenic"},
+      {"rule": "1 Strong AND 2 Moderate AND ≥2 Supporting", "result": "Pathogenic"},
+      {"rule": "1 Strong AND 1 Moderate AND ≥4 Supporting", "result": "Pathogenic"}
+    ],
+
+    "likely_pathogenic": [
+      {"rule": "1 Very Strong AND 1 Moderate", "result": "Likely Pathogenic"},
+      {"rule": "1 Strong AND 1-2 Moderate", "result": "Likely Pathogenic"},
+      {"rule": "1 Strong AND ≥2 Supporting", "result": "Likely Pathogenic"},
+      {"rule": "≥3 Moderate", "result": "Likely Pathogenic"},
+      {"rule": "2 Moderate AND ≥2 Supporting", "result": "Likely Pathogenic"},
+      {"rule": "1 Moderate AND ≥4 Supporting", "result": "Likely Pathogenic"}
+    ],
+
+    "benign": [
+      {"rule": "1 Standalone", "result": "Benign"},
+      {"rule": "≥2 Strong", "result": "Benign"}
+    ],
+
+    "likely_benign": [
+      {"rule": "1 Strong AND 1 Supporting", "result": "Likely Benign"},
+      {"rule": "≥2 Supporting", "result": "Likely Benign"}
+    ]
+  },
+
+  "criteria_definitions": {
+    "pathogenic": {
+      "PVS1": {
+        "name": "Null variant",
+        "strength": "very_strong",
+        "description": "Null variant in gene where LOF is established mechanism of disease",
+        "applicable_to": ["nonsense", "frameshift", "canonical_splice", "start_lost", "exon_deletion"],
+        "caveats": ["Check for NMD escape", "Consider last exon", "Verify LOF mechanism"]
+      },
+      "PS1": {
+        "name": "Same amino acid change",
+        "strength": "strong",
+        "description": "Same amino acid change as previously established pathogenic variant",
+        "requirement": "Different nucleotide, same amino acid as known pathogenic"
+      },
+      "PS2": {
+        "name": "De novo (confirmed)",
+        "strength": "strong",
+        "description": "De novo with maternity and paternity confirmed",
+        "source": "case_data"
+      },
+      "PS3": {
+        "name": "Functional studies",
+        "strength": "strong",
+        "description": "Well-established functional studies show deleterious effect",
+        "source": "literature"
+      },
+      "PS4": {
+        "name": "Prevalence in affected",
+        "strength": "strong",
+        "description": "Significantly increased prevalence in affected vs controls",
+        "source": "case_data",
+        "note": "Relative risk >5.0 or OR with 95% CI excluding 1.0"
+      },
+      "PM1": {
+        "name": "Mutational hotspot",
+        "strength": "moderate",
+        "description": "Located in mutational hot spot and/or critical functional domain"
+      },
+      "PM2": {
+        "name": "Absent from population",
+        "strength": "supporting",
+        "description": "Absent or extremely low frequency in population databases",
+        "note": "Downgraded to supporting per 2018 SVI recommendation"
+      },
+      "PM3": {
+        "name": "In trans with pathogenic",
+        "strength": "moderate",
+        "description": "For recessive disorders, detected in trans with pathogenic variant",
+        "source": "case_data"
+      },
+      "PM4": {
+        "name": "Protein length change",
+        "strength": "moderate",
+        "description": "Protein length change in non-repeat region"
+      },
+      "PM5": {
+        "name": "Novel missense at pathogenic residue",
+        "strength": "moderate",
+        "description": "Novel missense at position where different pathogenic missense seen"
+      },
+      "PM6": {
+        "name": "De novo (assumed)",
+        "strength": "moderate",
+        "description": "Assumed de novo without confirmation of parentage",
+        "source": "case_data"
+      },
+      "PP1": {
+        "name": "Cosegregation",
+        "strength": "supporting",
+        "description": "Cosegregation with disease in multiple affected family members",
+        "source": "case_data"
+      },
+      "PP2": {
+        "name": "Missense in constrained gene",
+        "strength": "supporting",
+        "description": "Missense in gene with low rate of benign missense variation"
+      },
+      "PP3": {
+        "name": "Computational pathogenic",
+        "strength": "supporting",
+        "description": "Multiple computational tools support deleterious effect"
+      },
+      "PP4": {
+        "name": "Phenotype specific",
+        "strength": "supporting",
+        "description": "Patient phenotype highly specific for disease with single genetic etiology",
+        "source": "case_data"
+      },
+      "PP5": {
+        "name": "Reputable source pathogenic",
+        "strength": "supporting",
+        "description": "Reputable source reports as pathogenic",
+        "note": "Deprecated - use primary evidence instead"
+      }
+    },
+
+    "benign": {
+      "BA1": {
+        "name": "High population frequency",
+        "strength": "standalone",
+        "description": "Allele frequency > 5% in population database"
+      },
+      "BS1": {
+        "name": "Population frequency",
+        "strength": "strong",
+        "description": "Allele frequency greater than expected for disorder"
+      },
+      "BS2": {
+        "name": "Healthy adult observation",
+        "strength": "strong",
+        "description": "Observed in healthy adult with full penetrance expected",
+        "source": "case_data"
+      },
+      "BS3": {
+        "name": "Functional studies benign",
+        "strength": "strong",
+        "description": "Well-established functional studies show no deleterious effect",
+        "source": "literature"
+      },
+      "BS4": {
+        "name": "Lack of segregation",
+        "strength": "strong",
+        "description": "Lack of segregation in affected family members",
+        "source": "case_data"
+      },
+      "BP1": {
+        "name": "Missense in truncating gene",
+        "strength": "supporting",
+        "description": "Missense in gene where only truncating variants cause disease"
+      },
+      "BP2": {
+        "name": "In trans/cis with pathogenic",
+        "strength": "supporting",
+        "description": "Observed in trans with dominant pathogenic OR in cis with pathogenic",
+        "source": "case_data"
+      },
+      "BP3": {
+        "name": "In-frame in repeat",
+        "strength": "supporting",
+        "description": "In-frame deletion/insertion in repetitive region"
+      },
+      "BP4": {
+        "name": "Computational benign",
+        "strength": "supporting",
+        "description": "Multiple computational tools suggest no impact"
+      },
+      "BP5": {
+        "name": "Alternate cause",
+        "strength": "supporting",
+        "description": "Variant found in case with alternate molecular cause",
+        "source": "case_data"
+      },
+      "BP6": {
+        "name": "Reputable source benign",
+        "strength": "supporting",
+        "description": "Reputable source reports as benign",
+        "note": "Deprecated - use primary evidence instead"
+      },
+      "BP7": {
+        "name": "Silent, no splice impact",
+        "strength": "supporting",
+        "description": "Synonymous variant with no predicted splice impact"
+      }
+    }
+  }
+}
