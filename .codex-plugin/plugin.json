@@ -1,6 +1,6 @@
 {
   "name": "noxia-skills",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Clinical genetic analysis and reporting skills for the Noxia rare disease variant analysis platform",
   "author": {
     "name": "Wenbo Mu",
@@ -24,7 +24,7 @@
   "interface": {
     "displayName": "Noxia Skills",
     "shortDescription": "Rare disease variant analysis, ACMG classification, and clinical reporting for Noxia",
-    "longDescription": "Use Noxia Skills to perform end-to-end clinical genetic analysis: create cases, upload VCFs, run phenotype-driven variant scans, classify variants with ACMG criteria, and draft clinical reports — or run everything unattended with the fast-forward skill. Includes phenotype-driven inference for negative WES results.",
+    "longDescription": "Use Noxia Skills to perform end-to-end clinical genetic analysis: create cases, upload VCFs, run phenotype-driven variant scans, classify variants with ACMG criteria, and draft clinical reports — or run everything unattended with the fast-forward skill. Includes deep ACMG/VCEP classification with ClinGen gene-specific guidelines, phenotype-driven inference for negative WES results.",
     "developerName": "Wenbo Mu",
     "category": "Coding",
     "capabilities": [

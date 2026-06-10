@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Clinical genetic analysis and reporting skills for the Noxia rare disease variant analysis platform",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -19,7 +19,8 @@
         "./skills/noxia-fast-forward",
         "./skills/noxia-phenotype-inference",
         "./skills/noxia-reporting",
-        "./skills/noxia-variant-analysis"
+        "./skills/noxia-variant-analysis",
+        "./skills/noxia-variant-classifier"
       ]
     }
   ]
